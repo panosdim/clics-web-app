@@ -1,5 +1,5 @@
 import DoneIcon from '@mui/icons-material/Done';
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { getISOWeek, getYear } from 'date-fns';
 import React, { useState } from 'react';
 import * as Realm from 'realm-web';
@@ -19,15 +19,18 @@ type WeekTableProps = {
 export const WeekTable = ({ user, selectedWeek, onSelectionChange, refresh }: WeekTableProps) => {
     const [clicsState, setClicsState] = useState<dbResults | undefined>();
     const [selectedRow, setSelectedRow] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const week: string = String(getISOWeek(selectedWeek)) + String(getYear(selectedWeek));
 
     React.useEffect(() => {
         setSelectedRow('');
+        setIsLoading(true);
 
         const mongo = user.mongoClient(CLUSTER_NAME);
         const items = mongo.db(DATABASE_NAME).collection(COLLECTION_NAME);
 
         items.find({ week: week }, { limit: 1000 }).then((docs: dbResults) => {
+            setIsLoading(false);
             setClicsState(docs);
         });
 
@@ -48,18 +51,24 @@ export const WeekTable = ({ user, selectedWeek, onSelectionChange, refresh }: We
                         <TableCell>Activity</TableCell>
                         <TableCell>Object</TableCell>
                         <TableCell>Description</TableCell>
-                        <TableCell align='right'>Monday</TableCell>
-                        <TableCell align='right'>Tuesday</TableCell>
-                        <TableCell align='right'>Wednesday</TableCell>
-                        <TableCell align='right'>Thursday</TableCell>
-                        <TableCell align='right'>Friday</TableCell>
+                        <TableCell align='center'>Monday</TableCell>
+                        <TableCell align='center'>Tuesday</TableCell>
+                        <TableCell align='center'>Wednesday</TableCell>
+                        <TableCell align='center'>Thursday</TableCell>
+                        <TableCell align='center'>Friday</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {clicsState &&
+                    {isLoading ? (
+                        <TableRow key='loading'>
+                            <TableCell colSpan={9} align='center'>
+                                <CircularProgress />
+                            </TableCell>
+                        </TableRow>
+                    ) : (
+                        clicsState &&
                         clicsState.map((row) => {
                             const isSelected = selectedRow === row._id.toString();
-                            // noinspection HtmlDeprecatedAttribute
                             return (
                                 <TableRow
                                     sx={{ cursor: 'pointer' }}
@@ -72,14 +81,15 @@ export const WeekTable = ({ user, selectedWeek, onSelectionChange, refresh }: We
                                     <TableCell>{row.activity}</TableCell>
                                     <TableCell>{row.object}</TableCell>
                                     <TableCell>{findDescription(row.ian, row.activity, row.object)}</TableCell>
-                                    <TableCell align='right'>{row.days.monday ? <DoneIcon /> : ''}</TableCell>
-                                    <TableCell align='right'>{row.days.tuesday ? <DoneIcon /> : ''}</TableCell>
-                                    <TableCell align='right'>{row.days.wednesday ? <DoneIcon /> : ''}</TableCell>
-                                    <TableCell align='right'>{row.days.thursday ? <DoneIcon /> : ''}</TableCell>
-                                    <TableCell align='right'>{row.days.friday ? <DoneIcon /> : ''}</TableCell>
+                                    <TableCell align='center'>{row.days.monday ? <DoneIcon /> : ''}</TableCell>
+                                    <TableCell align='center'>{row.days.tuesday ? <DoneIcon /> : ''}</TableCell>
+                                    <TableCell align='center'>{row.days.wednesday ? <DoneIcon /> : ''}</TableCell>
+                                    <TableCell align='center'>{row.days.thursday ? <DoneIcon /> : ''}</TableCell>
+                                    <TableCell align='center'>{row.days.friday ? <DoneIcon /> : ''}</TableCell>
                                 </TableRow>
                             );
-                        })}
+                        })
+                    )}
                 </TableBody>
             </Table>
         </Paper>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import * as Realm from 'realm-web';
 import { clicsEntity } from '../model';
 import { ClicsCalendar } from './calendar';
+import { EntryForm } from './entryForm';
 import { WeekTable } from './weekTable';
 
 type ClicsProps = {
@@ -13,9 +14,11 @@ export function Clics({ user }: ClicsProps) {
     const [selectedWeek, setSelectedWeek] = useState(new Date());
     const [selectedItem, setSelectedItem] = useState<clicsEntity | undefined>();
     const [refresh, setRefresh] = useState(false);
+    const [isEntryModalOpen, setIsEntryModalOpen] = useState(false);
 
     const createNewClics = () => {
-        console.log('New Clics');
+        setSelectedItem(undefined);
+        setIsEntryModalOpen(true);
     };
 
     const onSelectedWeekChanged = (selectedWeek: Date) => {
@@ -25,11 +28,13 @@ export function Clics({ user }: ClicsProps) {
 
     const onSelectedRowChanged = (item: clicsEntity | undefined) => {
         setSelectedItem(item);
+        setIsEntryModalOpen(true);
     };
 
-    const triggerRefresh = () => {
+    const onClose = () => {
         setRefresh(!refresh);
         setSelectedItem(undefined);
+        setIsEntryModalOpen(false);
     };
 
     return (
@@ -65,6 +70,7 @@ export function Clics({ user }: ClicsProps) {
                     />
                 </Grid>
             </Grid>
+            <EntryForm open={isEntryModalOpen} selectedWeek={selectedWeek} clicsItem={selectedItem} onClose={onClose} />
         </>
     );
 }

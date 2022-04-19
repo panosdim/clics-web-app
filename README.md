@@ -17,7 +17,6 @@ Then in `clics` folder create a `.env` file with the following content
 
 ```
 REACT_APP_MONGODB_APP_ID=
-REACT_APP_MONGODB_APP_ID=
 REACT_APP_CLUSTER_NAME=
 REACT_APP_DATABASE_NAME=
 REACT_APP_COLLECTION_NAME=

@@ -4,6 +4,7 @@ import { getISOWeek, getYear } from 'date-fns';
 import React, { useState } from 'react';
 import * as Realm from 'realm-web';
 import { clicsEntity, dbResults } from '../model';
+import { findDescription } from '../utils/knownCodes';
 
 const CLUSTER_NAME = process.env.REACT_APP_CLUSTER_NAME || '';
 const DATABASE_NAME = process.env.REACT_APP_DATABASE_NAME || '';
@@ -46,6 +47,7 @@ export const WeekTable = ({ user, selectedWeek, onSelectionChange, refresh }: We
                         <TableCell>IAN</TableCell>
                         <TableCell>Activity</TableCell>
                         <TableCell>Object</TableCell>
+                        <TableCell>Description</TableCell>
                         <TableCell align='right'>Monday</TableCell>
                         <TableCell align='right'>Tuesday</TableCell>
                         <TableCell align='right'>Wednesday</TableCell>
@@ -69,6 +71,7 @@ export const WeekTable = ({ user, selectedWeek, onSelectionChange, refresh }: We
                                     <TableCell>{row.ian}</TableCell>
                                     <TableCell>{row.activity}</TableCell>
                                     <TableCell>{row.object}</TableCell>
+                                    <TableCell>{findDescription(row.ian, row.activity, row.object)}</TableCell>
                                     <TableCell align='right'>{row.days.monday ? <DoneIcon /> : ''}</TableCell>
                                     <TableCell align='right'>{row.days.tuesday ? <DoneIcon /> : ''}</TableCell>
                                     <TableCell align='right'>{row.days.wednesday ? <DoneIcon /> : ''}</TableCell>

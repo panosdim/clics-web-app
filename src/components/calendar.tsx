@@ -43,7 +43,9 @@ const CustomPickersDay = styled(PickersDay, {
         borderBottomRightRadius: '50%',
     }),
     ...(isHoliday && {
-        color: red[500],
+        '&&': {
+            color: red[500],
+        },
     }),
 })) as React.ComponentType<CustomPickerDayProps>;
 

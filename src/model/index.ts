@@ -4,6 +4,10 @@ export type clicsCodesType = {
     object: string;
 };
 
+export type clicsCodesDescType = clicsCodesType & {
+    description: string;
+}
+
 export type clicsCodesValidType = {
     ian: boolean;
     activity: boolean;

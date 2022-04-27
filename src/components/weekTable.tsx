@@ -4,7 +4,7 @@ import { getISOWeek, getYear } from 'date-fns';
 import React, { useState } from 'react';
 import * as Realm from 'realm-web';
 import { clicsEntity, dbResults } from '../model';
-import { findDescription } from '../utils/knownCodes';
+import { findDescription } from '../utils';
 
 const CLUSTER_NAME = process.env.REACT_APP_CLUSTER_NAME || '';
 const DATABASE_NAME = process.env.REACT_APP_DATABASE_NAME || '';

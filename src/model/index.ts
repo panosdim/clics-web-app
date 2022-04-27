@@ -33,3 +33,10 @@ export type selectedDaysType = {
     thursday: boolean;
     friday: boolean;
 };
+
+export type EntryFormType = selectedDaysType & {
+    ian: string;
+    activity: string;
+    object: string;
+    daysConflict: string;
+}

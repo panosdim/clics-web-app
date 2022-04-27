@@ -70,7 +70,13 @@ export function Clics({ user }: ClicsProps) {
                     />
                 </Grid>
             </Grid>
-            <EntryForm open={isEntryModalOpen} selectedWeek={selectedWeek} clicsItem={selectedItem} onClose={onClose} />
+            <EntryForm
+                open={isEntryModalOpen}
+                user={user}
+                selectedWeek={selectedWeek}
+                clicsItem={selectedItem}
+                onClose={onClose}
+            />
         </>
     );
 }

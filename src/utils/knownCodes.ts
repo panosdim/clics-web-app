@@ -1,6 +1,6 @@
 import { clicsCodesDescType } from "../model";
 
-const knownCodes: clicsCodesDescType[] = [
+export const knownCodes: clicsCodesDescType[] = [
     { ian: '16-041', activity: '7901', object: '0001', description: 'DOP' },
     { ian: '04-001', activity: '9007', object: '0007', description: 'Annual Leave' },
     { ian: '04-001', activity: '9008', object: '0008', description: 'Sick Leave' },

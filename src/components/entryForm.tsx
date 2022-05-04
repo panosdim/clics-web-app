@@ -15,7 +15,7 @@ import {
     IconButton,
     LinearProgress,
     Stack,
-    TextField,
+    TextField
 } from '@mui/material';
 import { getISOWeek, getYear } from 'date-fns';
 import { useSnackbar } from 'notistack';
@@ -184,7 +184,7 @@ export function EntryForm(props: Props) {
             setIsSubmitting(true);
             items.deleteOne({ _id: new ObjectId(clicsItem._id) }).then(() => {
                 setIsSubmitting(false);
-                enqueueSnackbar('New entry deleted successfully.', { variant: 'success' });
+                enqueueSnackbar('Entry deleted successfully.', { variant: 'success' });
                 onClose();
             });
         }

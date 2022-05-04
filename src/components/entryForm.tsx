@@ -184,7 +184,7 @@ export function EntryForm(props: Props) {
             setIsSubmitting(true);
             items.deleteOne({ _id: new ObjectId(clicsItem._id) }).then(() => {
                 setIsSubmitting(false);
-                enqueueSnackbar('New entry added successfully.', { variant: 'success' });
+                enqueueSnackbar('New entry deleted successfully.', { variant: 'success' });
                 onClose();
             });
         }
